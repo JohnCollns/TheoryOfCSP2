@@ -14,8 +14,16 @@ public class LexicalAnalyser {
 
 	public static List<Token> analyse(String sourceCode) throws LexicalException {
 		//Turn the input String into a list of Tokens!
+		String[] sourceArray = sourceCode.split("((?<=(\\{|\\}|\\|\\||&&|<|>|!|=|\\+|\\*|-|%|/|\\)|\\(|;|\\s|\"|'))|(?=(\\{|\\}|\\|\\||&&|<|>|=|!|\\+|\\*|-|%|/|\\)|\\(|;|\\s|\"|')))");
+		for (String word : sourceArray){
+			if (word.trim().length() > 0){
+				System.out.println(word);
+				System.out.println(tokenFromString(word));
+			}
+		}
 		return Collections.emptyList();
 	}
+
 
 	private static Optional<Token> tokenFromString(String t) {
 		Optional<Token.TokenType> type = tokenTypeOf(t);
