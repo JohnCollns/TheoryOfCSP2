@@ -14,14 +14,42 @@ public class LexicalAnalyser {
 
 	public static List<Token> analyse(String sourceCode) throws LexicalException {
 		//Turn the input String into a list of Tokens!
+                List<Token> tokenList = new ArrayList<Token>();
 		String[] sourceArray = sourceCode.split("((?<=(\\{|\\}|\\|\\||&&|<|>|!|=|\\+|\\*|-|%|/|\\)|\\(|;|\\s|\"|'))|(?=(\\{|\\}|\\|\\||&&|<|>|=|!|\\+|\\*|-|%|/|\\)|\\(|;|\\s|\"|')))");
-		for (String word : sourceArray){
-			if (word.trim().length() > 0){
-				System.out.println(word);
-				System.out.println(tokenFromString(word));
+		//for (String word : sourceArray){
+			//if (word.trim().length() > 0){
+				//System.out.println(word);
+				//System.out.println(tokenFromString(word));
+			//}
+		//}
+		//return Collections.emptyList();
+                
+                for (int i = 0; i < sourceArray.length; i++) {
+			if(sourceArray[i].equals(" ")) {
+				//i += 1;
+			}
+			else if (sourceArray[i].equals("=") && i != sourceArray.length-1 && sourceArray[i+1].equals("=")){
+				i += 1;
+				tokenList.add(tokenFromString("==").get());
+			}
+			else if (i != sourceArray.length-1 && i != 0 && sourceArray[i+1].equals("\"") && sourceArray[i-1].equals("\"")){
+				tokenList.add(new Token(Token.TokenType.STRINGLIT, sourceArray[i]));
+			}
+			else if (i != sourceArray.length-1 && i != 0 && sourceArray[i+1].equals("''") && sourceArray[i-1].equals("''")){
+				tokenList.add(new Token(Token.TokenType.CHARLIT, sourceArray[i]));
+			}
+			else {
+				Optional<Token> s = tokenFromString(sourceArray[i]);
+				if (s.isPresent()){
+					tokenList.add(s.get());
+				}
+				else {
+					throw new LexicalException("Invalid Input: " + sourceArray[i]);
+				}
 			}
 		}
-		return Collections.emptyList();
+
+		return tokenList;
 	}
 
 
@@ -94,6 +122,10 @@ public class LexicalAnalyser {
 			return Optional.of(Token.TokenType.TRUE);
 		case "false":
 			return Optional.of(Token.TokenType.FALSE);
+                case "\"":
+			return Optional.of(Token.TokenType.DQUOTE);
+		case "'":
+			return Optional.of(Token.TokenType.SQUOTE);
 		}
 
 		if (t.matches("\\d+"))
