@@ -32,6 +32,14 @@ public class LexicalAnalyser {
 				i += 1;
 				tokenList.add(tokenFromString("==").get());
 			}
+                        else if (sourceArray[i].equals(">") && i != sourceArray.length-1 && sourceArray[i+1].equals("=")){
+				i += 1;
+				tokenList.add(tokenFromString(">=").get());
+			}
+			else if (sourceArray[i].equals("<") && i != sourceArray.length-1 && sourceArray[i+1].equals("=")){
+				i += 1;
+				tokenList.add(tokenFromString("<=").get());
+			}
 			else if (i != sourceArray.length-1 && i != 0 && sourceArray[i+1].equals("\"") && sourceArray[i-1].equals("\"")){
 				tokenList.add(new Token(Token.TokenType.STRINGLIT, sourceArray[i]));
 			}
@@ -126,6 +134,16 @@ public class LexicalAnalyser {
 			return Optional.of(Token.TokenType.DQUOTE);
 		case "'":
 			return Optional.of(Token.TokenType.SQUOTE);
+                case "!=":
+			return Optional.of(Token.TokenType.NEQUAL);
+		case "<":
+			return Optional.of(Token.TokenType.LT);
+		case ">":
+			return Optional.of(Token.TokenType.GT);
+		case "<=":
+			return Optional.of(Token.TokenType.LE);
+		case ">=":
+			return Optional.of(Token.TokenType.GE);
 		}
 
 		if (t.matches("\\d+"))
