@@ -61,46 +61,46 @@ public class SyntacticAnalyser {
 		// Rule 23: <<poss if>> → ε
 		// Rule 24: <<assign>> → <<ID>> = <<expr>>
 		// Rule 25: <<decl>> → <<type>> <<ID>> <<poss assign>>
-		// Rule 26:	<<poss assign>> → = <<expr>>
-		// Rule 27:	<<poss assign>> → ε
-		// Rule 28:	<<print>> → System.out.println ( <<print expr>> )
-		// Rule 29:	<<type>> → int
-		// Rule 30:	<<type>> → boolean 
-		// Rule 31:	<<type>> → char
-		// Rule 32:	<<expr>> → <<rel expr>> <<bool expr>>
-		// Rule 33:	<<expr>> → <<char expr>>
-		// Rule 34:	<<char expr>> → ' <<char>> '
-		// Rule 35:	<<bool expr>> → <<bool op>> <<rel expr>> <<bool expr>>
-		// Rule 36:	<<bool expr>> → ε
-		// Rule 37:	<<bool op>> → <<bool eq>>
-		// Rule 38:	<<bool op>> → <<bool log>>
-		// Rule 39:	<<bool eq>> → ==
-		// Rule 40:	<<bool eq>> → !=
-		// Rule 41:	<<bool log>> → &&
-		// Rule 42:	<<bool log>> → ||
-		// Rule 43:	<<rel expr>> → <<arith expr>> <<rel expr'>>
-		// Rule 44:	<<rel expr>> → true
-		// Rule 45:	<<rel expr>> → false
-		// Rule 46:	<<rel expr'>> → <<rel op>> <<arith expr>>
-		// Rule 47:	<<rel expr'>> → ε
-		// Rule 48:	<<rel op>> → < 
-		// Rule 49:	<<rel op>> → <=
-		// Rule 50:	<<rel op>> → >
-		// Rule 51:	<<rel op>> → >=
-		// Rule 52:	<<arith expr>> → <<term>> <<arith expr'>>
-		// Rule 53:	<<arith expr'>> → + <<term>> <<arith expr'>>
-		// Rule 54:	<<arith expr'>> → - <<term>> <<arith expr'>>
-		// Rule 55:	<<arith expr'>> → ε
-		// Rule 56:	<<term>> → <<factor>> <<term'>>
-		// Rule 57:	<<term'>> → * <<factor>> <<term'>>
-		// Rule 58:	<<term'>> →  / <<factor>> <<term'>>
-		// Rule 59:	<<term'>> → % <<factor>> <<term'>>
-		// Rule 60:	<<term'>> → ε
-		// Rule 61:	<<factor>> → ( <<arith expr>> )
-		// Rule 62:	<<factor>> → <<ID>>
-		// Rule 63:	<<factor>> → <<num>>
-		// Rule 64:	<<print expr>> → <<rel expr>> <<bool expr>>
-		// Rule 65:	<<print expr>> → "<<string lit>>"
+		// Rule 26: <<poss assign>> → = <<expr>>
+		// Rule 27: <<poss assign>> → ε
+		// Rule 28: <<print>> → System.out.println ( <<print expr>> )
+		// Rule 29: <<type>> → int
+		// Rule 30: <<type>> → boolean 
+		// Rule 31: <<type>> → char
+		// Rule 32: <<expr>> → <<rel expr>> <<bool expr>>
+		// Rule 33: <<expr>> → <<char expr>>
+		// Rule 34: <<char expr>> → ' <<char>> '
+		// Rule 35: <<bool expr>> → <<bool op>> <<rel expr>> <<bool expr>>
+		// Rule 36: <<bool expr>> → ε
+		// Rule 37: <<bool op>> → <<bool eq>>
+		// Rule 38: <<bool op>> → <<bool log>>
+		// Rule 39: <<bool eq>> → ==
+		// Rule 40: <<bool eq>> → !=
+		// Rule 41: <<bool log>> → &&
+		// Rule 42: <<bool log>> → ||
+		// Rule 43: <<rel expr>> → <<arith expr>> <<rel expr'>>
+		// Rule 44: <<rel expr>> → true
+		// Rule 45: <<rel expr>> → false
+		// Rule 46: <<rel expr'>> → <<rel op>> <<arith expr>>
+		// Rule 47: <<rel expr'>> → ε
+		// Rule 48: <<rel op>> → < 
+		// Rule 49: <<rel op>> → <=
+		// Rule 50: <<rel op>> → >
+		// Rule 51: <<rel op>> → >=
+		// Rule 52: <<arith expr>> → <<term>> <<arith expr'>>
+		// Rule 53: <<arith expr'>> → + <<term>> <<arith expr'>>
+		// Rule 54: <<arith expr'>> → - <<term>> <<arith expr'>>
+		// Rule 55: <<arith expr'>> → ε
+		// Rule 56: <<term>> → <<factor>> <<term'>>
+		// Rule 57: <<term'>> → * <<factor>> <<term'>>
+		// Rule 58: <<term'>> →  / <<factor>> <<term'>>
+		// Rule 59: <<term'>> → % <<factor>> <<term'>>
+		// Rule 60: <<term'>> → ε
+		// Rule 61: <<factor>> → ( <<arith expr>> )
+		// Rule 62: <<factor>> → <<ID>>
+		// Rule 63: <<factor>> → <<num>>
+		// Rule 64: <<print expr>> → <<rel expr>> <<bool expr>>
+		// Rule 65: <<print expr>> → "<<string lit>>"
 		
 		return pTree;
 	}
