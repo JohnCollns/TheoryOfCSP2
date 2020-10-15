@@ -42,25 +42,27 @@ public class SyntacticAnalyser {
 		Token.TokenType.RBRACE};
                 
 		// Rule 2: <<los>> → <<stat>> <<los>>
-		Symbol[] r1 = {Token.TokenType.SEMICOLON, Token.TokenType.TYPE, Token.TokenType.PRINT, Token.TokenType.WHILE, Token.TokenType.FOR, Token.TokenType.IF, Token.TokenType.ID};
+		Symbol[] r1 = {TreeNode.Label.stat, TreeNode.Label.los};
 		// Rule 3: <<los>> → ε
-		Symbol[] r2 = {Token.TokenType.RBRACE};
+		Symbol[] r2 = {TreeNode.Label.epsilon};
 		// Rule 4: <<stat>> → <<while>>
-		Symbol[] r3 = {Token.TokenType.WHILE};
+		Symbol[] r3 = {TreeNode.Label.whilestat};
 		// Rule 5: <<stat>> → <<for>>
-		Symbol[] r4 = {Token.TokenType.FOR};
+		Symbol[] r4 = {TreeNode.Label.forstat};
 		// Rule 6: <<stat>> → <<if>>
-		Symbol[] r5 = {Token.TokenType.IF};
+		Symbol[] r5 = {TreeNode.Label.ifstat};
 		// Rule 7: <<stat>> → <<assign>> ;
-		Symbol[] r6 = {Token.TokenType.ID};
+		Symbol[] r6 = {TreeNode.Label.assign, Token.TokenType.SEMICOLON};
 		// Rule 8: <<stat>> → <<decl>> ;
-		Symbol[] r7 = {Token.TokenType.TYPE};
+		Symbol[] r7 = {TreeNode.Label.decl, Token.TokenType.SEMICOLON};
 		// Rule 9: <<stat>> → <<print>> ;
-		Symbol[] r8 = {Token.TokenType.PRINT};
+		Symbol[] r8 = {Token.TokenType.PRINT, Token.TokenType.SEMICOLON};
 		// Rule 10: <<stat>> → ;
 		Symbol[] r9 = {Token.TokenType.SEMICOLON};
 		// Rule 11: <<while>> → while ( <<rel expr>> <<bool expr>> ) { <<los>> }
-		// Rule 12: <<for>> → for ( <<for start>> ; <<rel expr>> <<bool expr>> ; <<for arith>> ) { <<los>> }
+		Symbol[] r10 = {Token.TokenType.WHILE, Token.TokenType.LPAREN, TreeNode.Label.relexpr, TreeNode.Label.boolexpr, Token.TokenType.RPAREN,
+		Token.TokenType.LBRACE, TreeNode.Label.los, Token.TokenType.RBRACE};		
+                // Rule 12: <<for>> → for ( <<for start>> ; <<rel expr>> <<bool expr>> ; <<for arith>> ) { <<los>> }
 		// Rule 13: <<for start>> → <<decl>>
 		// Rule 14: <<for start>> →<<assign>> 
 		// Rule 15: <<for start>> →  ε
