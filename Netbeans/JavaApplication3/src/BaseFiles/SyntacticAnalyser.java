@@ -37,9 +37,10 @@ public class SyntacticAnalyser {
 	
                 // Grammar Rules as list of symbols (terminals/tokens, variables/treenode.label's)
 		// Rule 1: <<prog>> → public class <<ID>> { public static void main ( String[] args ) { <<los>> } }
-		Symbol[] r0 = {Token.TokenType.PUBLIC, Token.TokenType.CLASS, Token.TokenType.ID, Token.TokenType.LBRACE, Token.TokenType.PUBLIC, Token.TokenType.VOID, Token.TokenType.MAIN, 
-		Token.TokenType.LPAREN, Token.TokenType.STRINGARR, Token.TokenType.ARGS, Token.TokenType.RPAREN, Token.TokenType.LBRACE, TreeNode.Label.los, Token.TokenType.RBRACE, 
-		Token.TokenType.RBRACE};
+		//Symbol[] r0 = {Token.TokenType.PUBLIC, Token.TokenType.CLASS, Token.TokenType.ID, Token.TokenType.LBRACE, Token.TokenType.PUBLIC, Token.TokenType.VOID, Token.TokenType.MAIN, 
+		//Token.TokenType.LPAREN, Token.TokenType.STRINGARR, Token.TokenType.ARGS, Token.TokenType.RPAREN, Token.TokenType.LBRACE, TreeNode.Label.los, Token.TokenType.RBRACE, 
+		//Token.TokenType.RBRACE};
+                Symbol[] r0 = {Token.TokenType.PUBLIC};
 		// Rule 2: <<los>> → <<stat>> <<los>>
 		Symbol[] r1 = {Token.TokenType.SEMICOLON, Token.TokenType.TYPE, Token.TokenType.PRINT, Token.TokenType.WHILE, Token.TokenType.FOR, Token.TokenType.IF, Token.TokenType.ID};
 		// Rule 3: <<los>> → ε
