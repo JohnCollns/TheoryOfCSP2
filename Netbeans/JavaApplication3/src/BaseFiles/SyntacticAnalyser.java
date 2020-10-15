@@ -24,28 +24,29 @@ public class SyntacticAnalyser {
 
 		stack.add(TreeNode.Label.prog);
 	
+                // Grammar Rules as list of symbols (terminals/tokens, variables/treenode.label's)
 		// Rule 1: <<prog>> → public class <<ID>> { public static void main ( String[] args ) { <<los>> } }
-		Symbol[] r1 = {Token.TokenType.PUBLIC, Token.TokenType.CLASS, Token.TokenType.ID, Token.TokenType.LBRACE, Token.TokenType.PUBLIC, Token.TokenType.VOID, Token.TokenType.MAIN, 
+		Symbol[] r0 = {Token.TokenType.PUBLIC, Token.TokenType.CLASS, Token.TokenType.ID, Token.TokenType.LBRACE, Token.TokenType.PUBLIC, Token.TokenType.VOID, Token.TokenType.MAIN, 
 		Token.TokenType.LPAREN, Token.TokenType.STRINGARR, Token.TokenType.ARGS, Token.TokenType.RPAREN, Token.TokenType.LBRACE, TreeNode.Label.los, Token.TokenType.RBRACE, 
 		Token.TokenType.RBRACE};
 		// Rule 2: <<los>> → <<stat>> <<los>>
-		Symbol[] r2 = {Token.TokenType.SEMICOLON, Token.TokenType.TYPE, Token.TokenType.PRINT, Token.TokenType.WHILE, Token.TokenType.FOR, Token.TokenType.IF, Token.TokenType.ID};
+		Symbol[] r1 = {Token.TokenType.SEMICOLON, Token.TokenType.TYPE, Token.TokenType.PRINT, Token.TokenType.WHILE, Token.TokenType.FOR, Token.TokenType.IF, Token.TokenType.ID};
 		// Rule 3: <<los>> → ε
-		Symbol[] r3 = {Token.TokenType.RBRACE};
+		Symbol[] r2 = {Token.TokenType.RBRACE};
 		// Rule 4: <<stat>> → <<while>>
-		Symbol[] r4 = {Token.TokenType.WHILE};
+		Symbol[] r3 = {Token.TokenType.WHILE};
 		// Rule 5: <<stat>> → <<for>>
-		Symbol[] r5 = {Token.TokenType.FOR};
+		Symbol[] r4 = {Token.TokenType.FOR};
 		// Rule 6: <<stat>> → <<if>>
-		Symbol[] r6 = {Token.TokenType.IF};
+		Symbol[] r5 = {Token.TokenType.IF};
 		// Rule 7: <<stat>> → <<assign>> ;
-		Symbol[] r7 = {Token.TokenType.ID};
+		Symbol[] r6 = {Token.TokenType.ID};
 		// Rule 8: <<stat>> → <<decl>> ;
-		Symbol[] r8 = {Token.TokenType.TYPE};
+		Symbol[] r7 = {Token.TokenType.TYPE};
 		// Rule 9: <<stat>> → <<print>> ;
-		Symbol[] r9 = {Token.TokenType.PRINT};
+		Symbol[] r8 = {Token.TokenType.PRINT};
 		// Rule 10: <<stat>> → ;
-		Symbol[] r10 = {Token.TokenType.SEMICOLON};
+		Symbol[] r9 = {Token.TokenType.SEMICOLON};
 		// Rule 11: <<while>> → while ( <<rel expr>> <<bool expr>> ) { <<los>> }
 		// Rule 12: <<for>> → for ( <<for start>> ; <<rel expr>> <<bool expr>> ; <<for arith>> ) { <<los>> }
 		// Rule 13: <<for start>> → <<decl>>
@@ -101,7 +102,40 @@ public class SyntacticAnalyser {
 		// Rule 63: <<factor>> → <<num>>
 		// Rule 64: <<print expr>> → <<rel expr>> <<bool expr>>
 		// Rule 65: <<print expr>> → "<<string lit>>"
-		
+                // rule list = all of above rules. 
+                
+                // Parsing Table
+                HashMap<Pair, Symbol[]> parseTable = new HashMap<Pair, Symbol[]>();
+		// Format: the key to the hashmap is a pair class, where the first object is is the token 
+                // being read by the analyser and the second is the symbol ontop of the stack. 
+                // This way pair[0] is the x axis of our parsing table and pair[1] is the y axis. 
+                // The value inside is a rule, which is held and returned as an array of symbols (tokens and treenode.label's) 
+                parseTable.put(new Pair(Token.TokenType.LPAREN, TreeNode.Label.prog), r0);
+                parseTable.put(new Pair(Token.TokenType.RPAREN, TreeNode.Label.prog), r0);
+                parseTable.put(new Pair(Token.TokenType.LBRACE, TreeNode.Label.prog), r0);
+                parseTable.put(new Pair(Token.TokenType.RBRACE, TreeNode.Label.prog), r0);
+                parseTable.put(new Pair(Token.TokenType.PUBLIC, TreeNode.Label.prog), r0);
+                parseTable.put(new Pair(Token.TokenType.CLASS, TreeNode.Label.prog), r0);
+                parseTable.put(new Pair(Token.TokenType.STATIC, TreeNode.Label.prog), r0);
+                parseTable.put(new Pair(Token.TokenType.VOID, TreeNode.Label.prog), r0);
+                parseTable.put(new Pair(Token.TokenType.MAIN, TreeNode.Label.prog), r0);
+                parseTable.put(new Pair(Token.TokenType.STRINGARR, TreeNode.Label.prog), r0);
+                parseTable.put(new Pair(Token.TokenType.ARGS, TreeNode.Label.prog), r0);
+                parseTable.put(new Pair(Token.TokenType.ID, TreeNode.Label.prog), r0);
+                // We need a rule for popping the $ off the stack, not sure how to 
+                // even put it on in the first place. Might find another workaround. 
+                parseTable.put(new Pair(Token.TokenType.SEMICOLON, TreeNode.Label.los), r1);
+                parseTable.put(new Pair(Token.TokenType.TYPE, TreeNode.Label.los), r1);
+                parseTable.put(new Pair(Token.TokenType.PRINT, TreeNode.Label.los), r1);
+                parseTable.put(new Pair(Token.TokenType.WHILE, TreeNode.Label.los), r1);
+                parseTable.put(new Pair(Token.TokenType.FOR, TreeNode.Label.los), r1);
+                parseTable.put(new Pair(Token.TokenType.IF, TreeNode.Label.los), r1);
+                parseTable.put(new Pair(Token.TokenType.ID, TreeNode.Label.los), r1);
+                
+                // There are the first two rows of the parsing table, I hope you can understand and continue on
+                
+                
+                
 		return pTree;
 	}
 
