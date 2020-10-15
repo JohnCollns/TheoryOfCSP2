@@ -19,10 +19,21 @@ public class SyntacticAnalyser {
 		//Turn the List of Tokens into a ParseTree.
 		ParseTree pTree = new ParseTree();
 		List<Symbol> stack = new ArrayList<Symbol>();
-		HashMap<String, Token> PDA = new HashMap<String, Token>();
+		//HashMap<String, Token> PDA = new HashMap<String, Token>();
 		//return new ParseTree();
 
+                // We should add a $ to stack first, not sure how, it's neither a token nor treeNode. 
 		stack.add(TreeNode.Label.prog);
+                
+                for (int i=0; i < tokens.size() - 1; i++){
+                    
+                    if (!getTop(stack).isVariable()){ // if top of stack is a terminal
+                        if (getTop(stack) == tokens.get(i)){ // if top of stack is the same terminal as the token being read
+                            // Pop top of stack from stack and loop again. 
+                            stack.remove(stack.size() - 1);
+                        }
+                    }
+                }
 	
                 // Grammar Rules as list of symbols (terminals/tokens, variables/treenode.label's)
 		// Rule 1: <<prog>> → public class <<ID>> { public static void main ( String[] args ) { <<los>> } }
@@ -138,5 +149,9 @@ public class SyntacticAnalyser {
                 
 		return pTree;
 	}
+        
+    static Symbol getTop(List<Symbol> list){
+        return list.get(list.size() - 1);
+    }
 
 }
