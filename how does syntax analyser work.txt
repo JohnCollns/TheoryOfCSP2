@@ -1,0 +1,5 @@
+how does the syntactic analyser work? 
+
+starts with first line in grammar
+
+looks to see what the next token is, from there it can tell what was the rule that lead to it being made. 
