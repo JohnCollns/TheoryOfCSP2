@@ -197,34 +197,46 @@ public class SyntacticAnalyser {
             stack.add(TreeNode.Label.prog);
 
             for (int i=0; i < tokens.size() - 1; i++){
-                if (getTop(stack) == new DollarSign()){
+                // For testing purposes
+                System.out.println("Starting a loop, reading token: " + tokens.get(i) + ", top of stack: " + getTop(stack));
+                if (getTop(stack) == new DollarSign()){ // I worry this is looking at memory address, not type, I prefer the following, but it does not work! (getTop(stack).getClass().equals(DollarSign)){ 
                     // Analysis is complete and successful
                     break;
                 }
                 
                 if (!getTop(stack).isVariable()){ // if top of stack is a terminal (or $)
                     if (getTop(stack) == tokens.get(i)){ // if top of stack is the same terminal as the token being read
+                        // Add top of stack symbol to parse tree
+                        
                         // Pop top of stack from stack and loop again. 
                         stack.remove(stack.size() - 1);
                     }
                     else {
-                        System.out.println("There is an error in the input on token: " + tokens.get(i) + ", and stack symbol: " + getTop(stack));
+                        System.out.println("Unexpected terminal error. On input on token: " + tokens.get(i) + ", and stack symbol: " + getTop(stack));
                         // Put a real error raise here, I don't know anything about that
                     }
                 } else { // top of stack is a variable
                     try {
-                        parseTable.get(new Pair(tokens.get(i), stack.get(stack.size() - 2)));
+                        //parseTable.get(new Pair(tokens.get(i), stack.get(stack.size() - 2))); // this may be erroneous, but it's here to test if an entry here exists
+                        Symbol oldTop = getTop(stack);
+                        // Add top of stack symbol to parse tree
                         stack.remove(stack.size() - 1); // Pop top off stack (therefore add to parse tree)
-                        // add to parse tree
+                        System.out.println("Popping stak, new top of stack: " + getTop(stack) + ", oldTop: " + oldTop);
+                        System.out.println("Checking parseTable at Pair(" + tokens.get(i) + ", " + oldTop + ")");
+                        Symbol[] production = parseTable.get(new Pair(tokens.get(i), oldTop));
+                        System.out.println("Production: " + production);
                         // Add new symbols to the stack, in reverse order of the grammar (think this works)
-                        for (int j=parseTable.get(new Pair(tokens.get(i), getTop(stack))).length - 1; j >= 0; j--){
-                            stack.add(parseTable.get(new Pair(tokens.get(i), getTop(stack)))[j]);
+                        for (int j=production.length - 1; j >= 0; j--){
+                            stack.add(production[j]);
+                            System.out.println("Pusing: " + production[j] + " to the stack");
                         }
                     } catch (Exception e){ // parsing table at this stack symbol and token is empty which means its an error in the string. 
-                        System.out.println("There is an error in the input on token: " + tokens.get(i) + ", and stack symbol: " + getTop(stack) + "or the stack had only one item left and we crashed from negative indexing. ");
+                        System.out.println("Parsing table error (missing entry) on the input on token: " + tokens.get(i) + ", and stack symbol: " + getTop(stack));
                         // Call a real error, I dare you
                     }
                 }
+                
+                
             }
 
 
