@@ -40,6 +40,7 @@ public class SyntacticAnalyser {
 		Symbol[] r0 = {Token.TokenType.PUBLIC, Token.TokenType.CLASS, Token.TokenType.ID, Token.TokenType.LBRACE, Token.TokenType.PUBLIC, Token.TokenType.VOID, Token.TokenType.MAIN, 
 		Token.TokenType.LPAREN, Token.TokenType.STRINGARR, Token.TokenType.ARGS, Token.TokenType.RPAREN, Token.TokenType.LBRACE, TreeNode.Label.los, Token.TokenType.RBRACE, 
 		Token.TokenType.RBRACE};
+                
 		// Rule 2: <<los>> → <<stat>> <<los>>
 		Symbol[] r1 = {Token.TokenType.SEMICOLON, Token.TokenType.TYPE, Token.TokenType.PRINT, Token.TokenType.WHILE, Token.TokenType.FOR, Token.TokenType.IF, Token.TokenType.ID};
 		// Rule 3: <<los>> → ε
@@ -121,18 +122,18 @@ public class SyntacticAnalyser {
                 // being read by the analyser and the second is the symbol ontop of the stack. 
                 // This way pair[0] is the x axis of our parsing table and pair[1] is the y axis. 
                 // The value inside is a rule, which is held and returned as an array of symbols (tokens and treenode.label's) 
-                parseTable.put(new Pair(Token.TokenType.LPAREN, TreeNode.Label.prog), r0);
-                parseTable.put(new Pair(Token.TokenType.RPAREN, TreeNode.Label.prog), r0);
-                parseTable.put(new Pair(Token.TokenType.LBRACE, TreeNode.Label.prog), r0);
-                parseTable.put(new Pair(Token.TokenType.RBRACE, TreeNode.Label.prog), r0);
+                //parseTable.put(new Pair(Token.TokenType.LPAREN, TreeNode.Label.prog), r0);
+                //parseTable.put(new Pair(Token.TokenType.RPAREN, TreeNode.Label.prog), r0);
+                //parseTable.put(new Pair(Token.TokenType.LBRACE, TreeNode.Label.prog), r0);
+                //parseTable.put(new Pair(Token.TokenType.RBRACE, TreeNode.Label.prog), r0);
                 parseTable.put(new Pair(Token.TokenType.PUBLIC, TreeNode.Label.prog), r0);
-                parseTable.put(new Pair(Token.TokenType.CLASS, TreeNode.Label.prog), r0);
-                parseTable.put(new Pair(Token.TokenType.STATIC, TreeNode.Label.prog), r0);
-                parseTable.put(new Pair(Token.TokenType.VOID, TreeNode.Label.prog), r0);
-                parseTable.put(new Pair(Token.TokenType.MAIN, TreeNode.Label.prog), r0);
-                parseTable.put(new Pair(Token.TokenType.STRINGARR, TreeNode.Label.prog), r0);
-                parseTable.put(new Pair(Token.TokenType.ARGS, TreeNode.Label.prog), r0);
-                parseTable.put(new Pair(Token.TokenType.ID, TreeNode.Label.prog), r0);
+                //parseTable.put(new Pair(Token.TokenType.CLASS, TreeNode.Label.prog), r0);
+                //parseTable.put(new Pair(Token.TokenType.STATIC, TreeNode.Label.prog), r0);
+                //parseTable.put(new Pair(Token.TokenType.VOID, TreeNode.Label.prog), r0);
+                //parseTable.put(new Pair(Token.TokenType.MAIN, TreeNode.Label.prog), r0);
+                //parseTable.put(new Pair(Token.TokenType.STRINGARR, TreeNode.Label.prog), r0);
+                //parseTable.put(new Pair(Token.TokenType.ARGS, TreeNode.Label.prog), r0);
+                //parseTable.put(new Pair(Token.TokenType.ID, TreeNode.Label.prog), r0);
                 // We need a rule for popping the $ off the stack, not sure how to 
                 // even put it on in the first place. Might find another workaround. 
                 parseTable.put(new Pair(Token.TokenType.SEMICOLON, TreeNode.Label.los), r1);
