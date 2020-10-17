@@ -190,8 +190,56 @@ public class SyntacticAnalyser {
             parseTable.put(new Pair(Token.TokenType.ID, TreeNode.Label.los), r1);
 
             // There are the first two rows of the parsing table, I hope you can understand and continue on
+            parseTable.put(new Pair(Token.TokenType.RBRACE, TreeNode.Label.los), r2);
 
+            parseTable.put(new Pair(Token.TokenType.WHILE, TreeNode.Label.stat), r3);
+            parseTable.put(new Pair(Token.TokenType.FOR, TreeNode.Label.stat), r4);
+            parseTable.put(new Pair(Token.TokenType.IF, TreeNode.Label.stat), r5);
+            parseTable.put(new Pair(Token.TokenType.ID, TreeNode.Label.stat), r6);
+            parseTable.put(new Pair(Token.TokenType.TYPE, TreeNode.Label.stat), r7);
+            parseTable.put(new Pair(Token.TokenType.PRINT, TreeNode.Label.stat), r8);
+            parseTable.put(new Pair(Token.TokenType.SEMICOLON, TreeNode.Label.stat), r9);
 
+            parseTable.put(new Pair(Token.TokenType.WHILE, TreeNode.Label.whilestat), r10);
+            parseTable.put(new Pair(Token.TokenType.FOR, TreeNode.Label.forstat), r11);
+            parseTable.put(new Pair(Token.TokenType.TYPE, TreeNode.Label.forstart), r12);
+            parseTable.put(new Pair(Token.TokenType.ID, TreeNode.Label.forstart), r13);
+            parseTable.put(new Pair(Token.TokenType.SEMICOLON, TreeNode.Label.forstart), r14);
+
+            parseTable.put(new Pair(Token.TokenType.LPAREN, TreeNode.Label.forarith), r15);
+            parseTable.put(new Pair(Token.TokenType.ID, TreeNode.Label.forarith), r15);
+            parseTable.put(new Pair(Token.TokenType.NUM, TreeNode.Label.forarith), r15);
+            parseTable.put(new Pair(Token.TokenType.RPAREN, TreeNode.Label.forarith), r16);
+            parseTable.put(new Pair(Token.TokenType.IF, TreeNode.Label.ifstat), r17);
+            parseTable.put(new Pair(Token.TokenType.ELSE, TreeNode.Label.elseifstat), r18);
+            parseTable.put(new Pair(Token.TokenType.RBRACE, TreeNode.Label.elseifstat), r19);
+            parseTable.put(new Pair(Token.TokenType.TYPE, TreeNode.Label.elseifstat), r19);
+            parseTable.put(new Pair(Token.TokenType.PRINT, TreeNode.Label.elseifstat), r19);
+            parseTable.put(new Pair(Token.TokenType.WHILE, TreeNode.Label.elseifstat), r19);
+            parseTable.put(new Pair(Token.TokenType.FOR, TreeNode.Label.elseifstat), r19);
+            parseTable.put(new Pair(Token.TokenType.IF, TreeNode.Label.elseifstat), r19);
+            
+            parseTable.put(new Pair(Token.TokenType.ELSE, TreeNode.Label.elseorelseif), r20);
+            parseTable.put(new Pair(Token.TokenType.IF, TreeNode.Label.possif), r21);
+            parseTable.put(new Pair(Token.TokenType.RBRACE, TreeNode.Label.possif), r22);
+            parseTable.put(new Pair(Token.TokenType.ID, TreeNode.Label.assign), r23);
+            parseTable.put(new Pair(Token.TokenType.TYPE, TreeNode.Label.decl), r24);
+            parseTable.put(new Pair(Token.TokenType.ASSIGN, TreeNode.Label.possassign), r25);
+            parseTable.put(new Pair(Token.TokenType.SEMICOLON, TreeNode.Label.possassign), r26);
+            parseTable.put(new Pair(Token.TokenType.PRINT, TreeNode.Label.print), r27);
+
+            // Might be an issue with these 3 since they are int, boolean, char respectively
+            parseTable.put(new Pair(Token.TokenType.TYPE, TreeNode.Label.type), r28);
+            parseTable.put(new Pair(Token.TokenType.TYPE, TreeNode.Label.type), r29);
+            parseTable.put(new Pair(Token.TokenType.TYPE, TreeNode.Label.type), r30);
+
+            parseTable.put(new Pair(Token.TokenType.LPAREN, TreeNode.Label.expr), r31);
+            parseTable.put(new Pair(Token.TokenType.ID, TreeNode.Label.expr), r31);
+            parseTable.put(new Pair(Token.TokenType.NUM, TreeNode.Label.expr), r31);
+            parseTable.put(new Pair(Token.TokenType.TRUE, TreeNode.Label.expr), r31);
+            parseTable.put(new Pair(Token.TokenType.FALSE, TreeNode.Label.expr), r31);
+
+            parseTable.put(new Pair(Token.TokenType.LPAREN, TreeNode.Label.expr), r32);
             
             stack.add(new DollarSign());
             stack.add(TreeNode.Label.prog);
@@ -221,14 +269,14 @@ public class SyntacticAnalyser {
                         Symbol oldTop = getTop(stack);
                         // Add top of stack symbol to parse tree
                         stack.remove(stack.size() - 1); // Pop top off stack (therefore add to parse tree)
-                        System.out.println("Popping stak, new top of stack: " + getTop(stack) + ", oldTop: " + oldTop);
+                        System.out.println("Popping stack, new top of stack: " + getTop(stack) + ", oldTop: " + oldTop);
                         System.out.println("Checking parseTable at Pair(" + tokens.get(i) + ", " + oldTop + ")");
                         Symbol[] production = parseTable.get(new Pair(tokens.get(i), oldTop));
                         System.out.println("Production: " + production);
                         // Add new symbols to the stack, in reverse order of the grammar (think this works)
                         for (int j=production.length - 1; j >= 0; j--){
                             stack.add(production[j]);
-                            System.out.println("Pusing: " + production[j] + " to the stack");
+                            System.out.println("Pushing: " + production[j] + " to the stack");
                         }
                     } catch (Exception e){ // parsing table at this stack symbol and token is empty which means its an error in the string. 
                         System.out.println("Parsing table error (missing entry) on the input on token: " + tokens.get(i) + ", and stack symbol: " + getTop(stack));
