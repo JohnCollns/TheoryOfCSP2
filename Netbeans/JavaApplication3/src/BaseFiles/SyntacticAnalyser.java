@@ -18,13 +18,16 @@ public class SyntacticAnalyser {
     public static ParseTree parse(List<Token> tokens) throws SyntaxException {
             //Turn the List of Tokens into a ParseTree.
             ParseTree pTree = new ParseTree();
-            List<Symbol> stack = new ArrayList<Symbol>();
+            ArrayList<Symbol> stack = new ArrayList<Symbol>();
             //HashMap<String, Token> PDA = new HashMap<String, Token>();
             //return new ParseTree();
 
             // Grammar Rules as list of symbols (terminals/tokens, variables/treenode.label's)
             // Rule 1: <<prog>> → public class <<ID>> { public static void main ( String[] args ) { <<los>> } }
-            Symbol[] r0 = {Token.TokenType.PUBLIC, Token.TokenType.CLASS, Token.TokenType.ID, Token.TokenType.LBRACE, Token.TokenType.PUBLIC, Token.TokenType.VOID, Token.TokenType.MAIN, 
+// real ver           Symbol[] r0 = {Token.TokenType.PUBLIC, Token.TokenType.CLASS, Token.TokenType.ID, Token.TokenType.LBRACE, Token.TokenType.PUBLIC, Token.TokenType.VOID, Token.TokenType.MAIN, 
+//            Token.TokenType.LPAREN, Token.TokenType.STRINGARR, Token.TokenType.ARGS, Token.TokenType.RPAREN, Token.TokenType.LBRACE, TreeNode.Label.los, Token.TokenType.RBRACE, 
+//            Token.TokenType.RBRACE};
+            Symbol[] r0 = {Token.TokenType.CLASS, Token.TokenType.ID, Token.TokenType.LBRACE, Token.TokenType.PUBLIC, Token.TokenType.VOID, Token.TokenType.MAIN, 
             Token.TokenType.LPAREN, Token.TokenType.STRINGARR, Token.TokenType.ARGS, Token.TokenType.RPAREN, Token.TokenType.LBRACE, TreeNode.Label.los, Token.TokenType.RBRACE, 
             Token.TokenType.RBRACE};
 
@@ -241,44 +244,64 @@ public class SyntacticAnalyser {
 
             parseTable.put(new Pair(Token.TokenType.LPAREN, TreeNode.Label.expr), r32);
             
-            stack.add(new DollarSign());
+            //stack.add(new DollarSign());
             stack.add(TreeNode.Label.prog);
+            
+//            System.out.println("Value of r44 (false): " + r44[0] + r44[0].getClass());
+//            //System.out.println("Key to parseTable (TRUE, expr): " );
+//            for (Pair i : parseTable.keySet()){
+//                //System.out.println(i + " " + i.fst().getClass());
+//                if (i.fst().equals(r44[0])){
+//                    System.out.println("Token.tokenType FALSE is equal to: " + i);
+//                }
+//            }
 
             for (int i=0; i < tokens.size() - 1; i++){
                 // For testing purposes
-                System.out.println("Starting a loop, reading token: " + tokens.get(i) + ", top of stack: " + getTop(stack));
-                if (getTop(stack) == new DollarSign()){ // I worry this is looking at memory address, not type, I prefer the following, but it does not work! (getTop(stack).getClass().equals(DollarSign)){ 
+                System.out.println("Starting a loop, reading token: " + tokens.get(i) + ", top of stack: " + getTop(stack) + " (type: " + getTop(stack).getClass()+")");
+                //System.out.println("Stack class: " + getTop(stack).getClass() + " Token class" + tokens.get(i).getClass());
+                Token.TokenType tok = tokens.get(i).getType();
+                if (getTop(stack) == new DollarSign() || stack.isEmpty()){ 
                     // Analysis is complete and successful
                     break;
                 }
                 
                 if (!getTop(stack).isVariable()){ // if top of stack is a terminal (or $)
-                    if (getTop(stack) == tokens.get(i)){ // if top of stack is the same terminal as the token being read
+                    if (getTop(stack) == tok){ // if top of stack is the same terminal as the token being read
                         // Add top of stack symbol to parse tree
                         
                         // Pop top of stack from stack and loop again. 
+                        System.out.println("Top of stack is a terminal token that matches stack, pop from stack. ");
                         stack.remove(stack.size() - 1);
                     }
                     else {
                         System.out.println("Unexpected terminal error. On input on token: " + tokens.get(i) + ", and stack symbol: " + getTop(stack));
                         // Put a real error raise here, I don't know anything about that
+                        
+                        // For testing purposes, pop here, where normally we wouldn't
+                        //stack.remove(stack.size() - 1);
                     }
                 } else { // top of stack is a variable
-                    try {
+                    Symbol[] testSymArray = parseTable.get(new Pair(tok, getTop(stack)));
+                    System.out.println("Key Pair(" + tok + ", " + getTop(stack) + ") returns: " + testSymArray);
+                    if (parseTable.containsKey(new Pair(tok, getTop(stack)))) {
+                        //System.out.println("Running the try section - match between stack and grammar symbol.");
                         //parseTable.get(new Pair(tokens.get(i), stack.get(stack.size() - 2))); // this may be erroneous, but it's here to test if an entry here exists
                         Symbol oldTop = getTop(stack);
                         // Add top of stack symbol to parse tree
-                        stack.remove(stack.size() - 1); // Pop top off stack (therefore add to parse tree)
-                        System.out.println("Popping stack, new top of stack: " + getTop(stack) + ", oldTop: " + oldTop);
-                        System.out.println("Checking parseTable at Pair(" + tokens.get(i) + ", " + oldTop + ")");
-                        Symbol[] production = parseTable.get(new Pair(tokens.get(i), oldTop));
-                        System.out.println("Production: " + production);
+                        //System.out.println("Removing top of stack. Stack size: " + stack.size() + ", removing: " + (stack.size()-1));
+                        stack.remove(stack.size() - 1);
+                        //System.out.println("We survived the pop");
+                        if (stack.size() > 0){ System.out.println("Popping stack, new top of stack: " + getTop(stack) + ", oldTop: " + oldTop); }
+                        System.out.println("Checking parseTable at Pair(" + tok + ", " + oldTop + ")");
+                        Symbol[] production = parseTable.get(new Pair(tok, oldTop));
+                        //System.out.println("Production: " + production);
                         // Add new symbols to the stack, in reverse order of the grammar (think this works)
                         for (int j=production.length - 1; j >= 0; j--){
                             stack.add(production[j]);
                             System.out.println("Pushing: " + production[j] + " to the stack");
                         }
-                    } catch (Exception e){ // parsing table at this stack symbol and token is empty which means its an error in the string. 
+                    } else { // parsing table at this stack symbol and token is empty which means its an error in the string. 
                         System.out.println("Parsing table error (missing entry) on the input on token: " + tokens.get(i) + ", and stack symbol: " + getTop(stack));
                         // Call a real error, I dare you
                     }
