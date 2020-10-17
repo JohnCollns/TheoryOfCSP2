@@ -244,6 +244,86 @@ public class SyntacticAnalyser {
 
             parseTable.put(new Pair(Token.TokenType.LPAREN, TreeNode.Label.expr), r32);
             
+            parseTable.put(new Pair(Token.TokenType.SQUOTE, TreeNode.Label.charexpr), r33);
+            parseTable.put(new Pair(Token.TokenType.EQUAL, TreeNode.Label.boolexpr), r34);
+            parseTable.put(new Pair(Token.TokenType.NEQUAL, TreeNode.Label.boolexpr), r34);
+            parseTable.put(new Pair(Token.TokenType.AND, TreeNode.Label.boolexpr), r34);
+            parseTable.put(new Pair(Token.TokenType.OR, TreeNode.Label.boolexpr), r34);
+
+            parseTable.put(new Pair(Token.TokenType.RPAREN, TreeNode.Label.boolexpr), r35);
+            parseTable.put(new Pair(Token.TokenType.SEMICOLON, TreeNode.Label.boolexpr), r35);
+
+            parseTable.put(new Pair(Token.TokenType.EQUAL, TreeNode.Label.boolop), r36);
+            parseTable.put(new Pair(Token.TokenType.NEQUAL, TreeNode.Label.boolop), r36);
+            parseTable.put(new Pair(Token.TokenType.AND, TreeNode.Label.boolop), r37);
+            parseTable.put(new Pair(Token.TokenType.OR, TreeNode.Label.boolop), r37);
+
+            parseTable.put(new Pair(Token.TokenType.EQUAL, TreeNode.Label.booleq), r38);
+            parseTable.put(new Pair(Token.TokenType.NEQUAL, TreeNode.Label.booleq), r39);
+
+            parseTable.put(new Pair(Token.TokenType.AND, TreeNode.Label.boollog), r40);
+            parseTable.put(new Pair(Token.TokenType.OR, TreeNode.Label.boollog), r41);
+
+            parseTable.put(new Pair(Token.TokenType.LPAREN, TreeNode.Label.relexpr), r42);
+            parseTable.put(new Pair(Token.TokenType.ID, TreeNode.Label.relexpr), r42);
+            parseTable.put(new Pair(Token.TokenType.NUM, TreeNode.Label.relexpr), r42);
+            parseTable.put(new Pair(Token.TokenType.TRUE, TreeNode.Label.relexpr), r43);
+            parseTable.put(new Pair(Token.TokenType.FALSE, TreeNode.Label.relexpr), r44); 
+            parseTable.put(new Pair(Token.TokenType.LE, TreeNode.Label.relexprprime), r45);
+            parseTable.put(new Pair(Token.TokenType.GE, TreeNode.Label.relexprprime), r45);
+            parseTable.put(new Pair(Token.TokenType.LT, TreeNode.Label.relexprprime), r45);
+            parseTable.put(new Pair(Token.TokenType.GT, TreeNode.Label.relexprprime), r45);
+
+            parseTable.put(new Pair(Token.TokenType.ID, TreeNode.Label.relexprprime), r46);
+            parseTable.put(new Pair(Token.TokenType.NUM, TreeNode.Label.relexprprime), r46);
+            parseTable.put(new Pair(Token.TokenType.LPAREN, TreeNode.Label.relexprprime), r46);
+            parseTable.put(new Pair(Token.TokenType.LT, TreeNode.Label.relop), r47);
+            parseTable.put(new Pair(Token.TokenType.LE, TreeNode.Label.relop), r48);
+            parseTable.put(new Pair(Token.TokenType.GT, TreeNode.Label.relop), r49);
+            parseTable.put(new Pair(Token.TokenType.GE, TreeNode.Label.relop), r50);
+            
+            parseTable.put(new Pair(Token.TokenType.LPAREN, TreeNode.Label.arithexpr), r51);
+            parseTable.put(new Pair(Token.TokenType.ID, TreeNode.Label.arithexpr), r51);
+            parseTable.put(new Pair(Token.TokenType.NUM, TreeNode.Label.arithexpr), r51);
+            parseTable.put(new Pair(Token.TokenType.PLUS, TreeNode.Label.arithexprprime), r52);
+            parseTable.put(new Pair(Token.TokenType.MINUS, TreeNode.Label.arithexprprime), r53);
+            parseTable.put(new Pair(Token.TokenType.EQUAL, TreeNode.Label.arithexprprime), r54);
+            parseTable.put(new Pair(Token.TokenType.NEQUAL, TreeNode.Label.arithexprprime), r54);
+            parseTable.put(new Pair(Token.TokenType.LT, TreeNode.Label.arithexprprime), r54);
+            parseTable.put(new Pair(Token.TokenType.GT, TreeNode.Label.arithexprprime), r54);
+            parseTable.put(new Pair(Token.TokenType.LE, TreeNode.Label.arithexprprime), r54);
+            parseTable.put(new Pair(Token.TokenType.GE, TreeNode.Label.arithexprprime), r54);
+            parseTable.put(new Pair(Token.TokenType.AND, TreeNode.Label.arithexprprime), r54);
+            parseTable.put(new Pair(Token.TokenType.OR, TreeNode.Label.arithexprprime), r54);
+
+            parseTable.put(new Pair(Token.TokenType.LPAREN, TreeNode.Label.term), r55);
+            parseTable.put(new Pair(Token.TokenType.ID, TreeNode.Label.term), r55);
+            parseTable.put(new Pair(Token.TokenType.NUM, TreeNode.Label.term), r55);
+            parseTable.put(new Pair(Token.TokenType.TIMES, TreeNode.Label.termprime), r56);
+            parseTable.put(new Pair(Token.TokenType.DIVIDE, TreeNode.Label.termprime), r57);
+            parseTable.put(new Pair(Token.TokenType.MOD, TreeNode.Label.termprime), r58);
+
+            parseTable.put(new Pair(Token.TokenType.PLUS, TreeNode.Label.termprime), r59);
+            parseTable.put(new Pair(Token.TokenType.MINUS, TreeNode.Label.termprime), r59);
+            parseTable.put(new Pair(Token.TokenType.EQUAL, TreeNode.Label.termprime), r59);
+            parseTable.put(new Pair(Token.TokenType.NEQUAL, TreeNode.Label.termprime), r59);
+            parseTable.put(new Pair(Token.TokenType.LT, TreeNode.Label.termprime), r59);
+            parseTable.put(new Pair(Token.TokenType.GT, TreeNode.Label.termprime), r59);
+            parseTable.put(new Pair(Token.TokenType.LE, TreeNode.Label.termprime), r59);
+            parseTable.put(new Pair(Token.TokenType.GE, TreeNode.Label.termprime), r59);
+            parseTable.put(new Pair(Token.TokenType.AND, TreeNode.Label.termprime), r59);
+            parseTable.put(new Pair(Token.TokenType.OR, TreeNode.Label.termprime), r59);
+            
+            parseTable.put(new Pair(Token.TokenType.LPAREN, TreeNode.Label.factor), r60);
+            parseTable.put(new Pair(Token.TokenType.ID, TreeNode.Label.factor), r61);
+            parseTable.put(new Pair(Token.TokenType.NUM, TreeNode.Label.factor), r62);
+            parseTable.put(new Pair(Token.TokenType.LPAREN, TreeNode.Label.printexpr), r63);
+            parseTable.put(new Pair(Token.TokenType.TRUE, TreeNode.Label.printexpr), r63);
+            parseTable.put(new Pair(Token.TokenType.FALSE, TreeNode.Label.printexpr), r63);
+            parseTable.put(new Pair(Token.TokenType.ID, TreeNode.Label.printexpr), r63);
+            parseTable.put(new Pair(Token.TokenType.NUM, TreeNode.Label.printexpr), r63);
+            parseTable.put(new Pair(Token.TokenType.DQUOTE, TreeNode.Label.printexpr), r64);
+            
             //stack.add(new DollarSign());
             stack.add(TreeNode.Label.prog);
             
