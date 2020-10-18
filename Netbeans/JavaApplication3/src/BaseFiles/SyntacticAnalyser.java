@@ -335,10 +335,11 @@ public class SyntacticAnalyser {
 //                    System.out.println("Token.tokenType FALSE is equal to: " + i);
 //                }
 //            }
-
+            
             for (int i=0; i < tokens.size() - 1; i++){
                 // For testing purposes
-                System.out.println("Starting a loop, reading token: " + tokens.get(i) + ", top of stack: " + getTop(stack) + " (type: " + getTop(stack).getClass()+")");
+                System.out.print(i);
+                System.out.println(": Starting a loop, reading token: " + tokens.get(i) + ", top of stack: " + getTop(stack) + " (type: " + getTop(stack).getClass()+")");
                 //System.out.println("Stack class: " + getTop(stack).getClass() + " Token class" + tokens.get(i).getClass());
                 Token.TokenType tok = tokens.get(i).getType();
                 if (getTop(stack) == new DollarSign() || stack.isEmpty()){ 
@@ -387,7 +388,7 @@ public class SyntacticAnalyser {
                     }
                 }
                 
-                
+                System.out.println();
             }
 
 
