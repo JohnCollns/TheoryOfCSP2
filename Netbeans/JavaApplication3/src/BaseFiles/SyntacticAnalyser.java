@@ -31,7 +31,7 @@ public class SyntacticAnalyser {
 // real ver           Symbol[] r0 = {Token.TokenType.PUBLIC, Token.TokenType.CLASS, Token.TokenType.ID, Token.TokenType.LBRACE, Token.TokenType.PUBLIC, Token.TokenType.VOID, Token.TokenType.MAIN, 
 //            Token.TokenType.LPAREN, Token.TokenType.STRINGARR, Token.TokenType.ARGS, Token.TokenType.RPAREN, Token.TokenType.LBRACE, TreeNode.Label.los, Token.TokenType.RBRACE, 
 //            Token.TokenType.RBRACE};
-            Symbol[] r0 = {Token.TokenType.PUBLIC, Token.TokenType.CLASS, Token.TokenType.ID, Token.TokenType.LBRACE, Token.TokenType.PUBLIC, Token.TokenType.VOID, Token.TokenType.MAIN, 
+            Symbol[] r0 = {Token.TokenType.PUBLIC, Token.TokenType.CLASS, Token.TokenType.ID, Token.TokenType.LBRACE, Token.TokenType.PUBLIC, Token.TokenType.STATIC, Token.TokenType.VOID, Token.TokenType.MAIN, 
             Token.TokenType.LPAREN, Token.TokenType.STRINGARR, Token.TokenType.ARGS, Token.TokenType.RPAREN, Token.TokenType.LBRACE, TreeNode.Label.los, Token.TokenType.RBRACE, 
             Token.TokenType.RBRACE};
 
