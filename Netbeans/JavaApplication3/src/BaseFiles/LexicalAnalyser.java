@@ -24,6 +24,10 @@ public class LexicalAnalyser {
 		//}
 		//return Collections.emptyList();
                 
+                if(sourceCode.equals("")) {
+			return null;
+		}
+                
                 for (int i = 0; i < sourceArray.length; i++) {
 			if(sourceArray[i].equals(" ")) {
 				//i += 1;

@@ -21,7 +21,11 @@ public class SyntacticAnalyser {
             //ArrayList<Symbol> stack = new ArrayList<Symbol>();
             ArrayList<Pair> stack = new ArrayList<>();
             // Pair contains (1- the symbol, 2- its parent node).
-
+            
+            if (tokens == null){
+                throw new SyntaxException("Empty Input");
+            }
+            
             // Grammar Rules as list of symbols (terminals/tokens, variables/treenode.label's)
             // Rule 1: <<prog>> → public class <<ID>> { public static void main ( String[] args ) { <<los>> } }
 // real ver           Symbol[] r0 = {Token.TokenType.PUBLIC, Token.TokenType.CLASS, Token.TokenType.ID, Token.TokenType.LBRACE, Token.TokenType.PUBLIC, Token.TokenType.VOID, Token.TokenType.MAIN, 
