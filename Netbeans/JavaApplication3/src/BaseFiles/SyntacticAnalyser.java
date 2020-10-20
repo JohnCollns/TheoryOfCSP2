@@ -246,7 +246,7 @@ public class SyntacticAnalyser {
             parseTable.put(new Pair(Token.TokenType.TRUE, TreeNode.Label.expr), r31);
             parseTable.put(new Pair(Token.TokenType.FALSE, TreeNode.Label.expr), r31);
 
-            parseTable.put(new Pair(Token.TokenType.LPAREN, TreeNode.Label.expr), r32);
+            parseTable.put(new Pair(Token.TokenType.SQUOTE, TreeNode.Label.expr), r32);
             
             parseTable.put(new Pair(Token.TokenType.SQUOTE, TreeNode.Label.charexpr), r33);
             parseTable.put(new Pair(Token.TokenType.EQUAL, TreeNode.Label.boolexpr), r34);
