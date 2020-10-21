@@ -28,12 +28,14 @@ public class SyntacticAnalyser {
             
             // Grammar Rules as list of symbols (terminals/tokens, variables/treenode.label's)
             // Rule 1: <<prog>> → public class <<ID>> { public static void main ( String[] args ) { <<los>> } }
-// real ver           Symbol[] r0 = {Token.TokenType.PUBLIC, Token.TokenType.CLASS, Token.TokenType.ID, Token.TokenType.LBRACE, Token.TokenType.PUBLIC, Token.TokenType.VOID, Token.TokenType.MAIN, 
-//            Token.TokenType.LPAREN, Token.TokenType.STRINGARR, Token.TokenType.ARGS, Token.TokenType.RPAREN, Token.TokenType.LBRACE, TreeNode.Label.los, Token.TokenType.RBRACE, 
-//            Token.TokenType.RBRACE};
             Symbol[] r0 = {Token.TokenType.PUBLIC, Token.TokenType.CLASS, Token.TokenType.ID, Token.TokenType.LBRACE, Token.TokenType.PUBLIC, Token.TokenType.STATIC, Token.TokenType.VOID, Token.TokenType.MAIN, 
             Token.TokenType.LPAREN, Token.TokenType.STRINGARR, Token.TokenType.ARGS, Token.TokenType.RPAREN, Token.TokenType.LBRACE, TreeNode.Label.los, Token.TokenType.RBRACE, 
             Token.TokenType.RBRACE};
+
+            // add static on NetBeans Version
+            //Symbol[] r0 = {Token.TokenType.CLASS, Token.TokenType.ID, Token.TokenType.LBRACE, Token.TokenType.PUBLIC, Token.TokenType.STATIC, Token.TokenType.VOID, Token.TokenType.MAIN, 
+            //Token.TokenType.LPAREN, Token.TokenType.STRINGARR, Token.TokenType.ARGS, Token.TokenType.RPAREN, Token.TokenType.LBRACE, TreeNode.Label.los, Token.TokenType.RBRACE, 
+            //Token.TokenType.RBRACE};
 
             // Rule 2: <<los>> → <<stat>> <<los>>
             Symbol[] r1 = {TreeNode.Label.stat, TreeNode.Label.los};
@@ -95,15 +97,15 @@ public class SyntacticAnalyser {
             // Rule 29: <<type>> → int
             Symbol[] r28 = {Token.TokenType.TYPE};
             // Rule 30: <<type>> → boolean 
-            Symbol[] r29 = {Token.TokenType.TYPE};
+            //Symbol[] r29 = {Token.TokenType.TYPE};
             // Rule 31: <<type>> → char
-            Symbol[] r30 = {Token.TokenType.TYPE};
+            //Symbol[] r30 = {Token.TokenType.TYPE};
             // Rule 32: <<expr>> → <<rel expr>> <<bool expr>>
             Symbol[] r31 = {TreeNode.Label.relexpr, TreeNode.Label.boolexpr};
             // Rule 33: <<expr>> → <<char expr>>
             Symbol[] r32 = {TreeNode.Label.charexpr};
             // Rule 34: <<char expr>> → ' <<char>> '
-            Symbol[] r33 = {Token.TokenType.SQUOTE, Token.TokenType.TYPE, Token.TokenType.SQUOTE};
+            Symbol[] r33 = {Token.TokenType.SQUOTE, Token.TokenType.CHARLIT, Token.TokenType.SQUOTE};
             // Rule 35: <<bool expr>> → <<bool op>> <<rel expr>> <<bool expr>>
             Symbol[] r34 = {TreeNode.Label.boolop, TreeNode.Label.relexpr, TreeNode.Label.boolexpr};
             // Rule 36: <<bool expr>> → ε
@@ -173,7 +175,8 @@ public class SyntacticAnalyser {
             // being read by the analyser and the second is the symbol ontop of the stack. 
             // This way pair[0] is the x axis of our parsing table and pair[1] is the y axis. 
             // The value inside is a rule, which is held and returned as an array of symbols (tokens and treenode.label's) 
-            HashMap<Pair, Symbol[]> parseTable = new HashMap<Pair, Symbol[]>();
+            //Pair<TokenType, Symbol> pair = new Pair<TokenType, Symbol>)()
+            HashMap<Pair<Token.TokenType, Symbol>, Symbol[]> parseTable = new HashMap<Pair<Token.TokenType, Symbol>, Symbol[]>();
             //parseTable.put(new Pair(Token.TokenType.LPAREN, TreeNode.Label.prog), r0);
             //parseTable.put(new Pair(Token.TokenType.RPAREN, TreeNode.Label.prog), r0);
             //parseTable.put(new Pair(Token.TokenType.LBRACE, TreeNode.Label.prog), r0);
@@ -340,6 +343,7 @@ public class SyntacticAnalyser {
             parseTable.put(new Pair(Token.TokenType.NUM, TreeNode.Label.printexpr), r63);
             parseTable.put(new Pair(Token.TokenType.DQUOTE, TreeNode.Label.printexpr), r64);
             
+            
             //stack.add(new DollarSign());
             TreeNode baseNode = new TreeNode(TreeNode.Label.prog, null);
             pTree.setRoot(baseNode);
@@ -355,7 +359,7 @@ public class SyntacticAnalyser {
 //            }
 
             TreeNode.Label curLabel;
-            for (int i=0; i < tokens.size() - 1; i++){
+            for (int i=0; i < tokens.size(); i++){
                 //System.out.println("Stack class: " + getTop(stack).getClass() + " Token class" + tokens.get(i).getClass());
                 Token.TokenType tok = tokens.get(i).getType();
                 Symbol stackTop = (Symbol) stack.get(stack.size() - 1).fst();
