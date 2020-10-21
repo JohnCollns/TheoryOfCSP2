@@ -343,10 +343,8 @@ public class SyntacticAnalyser {
             parseTable.put(new Pair(Token.TokenType.NUM, TreeNode.Label.printexpr), r63);
             parseTable.put(new Pair(Token.TokenType.DQUOTE, TreeNode.Label.printexpr), r64);
             
-<<<<<<< HEAD
             Token.TokenType[] specialTokenTypes = {Token.TokenType.ID, Token.TokenType.NUM, Token.TokenType.CHARLIT, Token.TokenType.TYPE, Token.TokenType.STRINGLIT};
-=======
->>>>>>> e3cb423a029755530663c7c2d7665b5b81131f63
+
             
             //stack.add(new DollarSign());
             TreeNode baseNode = new TreeNode(TreeNode.Label.prog, null);
