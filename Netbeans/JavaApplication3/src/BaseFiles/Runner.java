@@ -10,8 +10,8 @@ public class Runner {
 
 	public static void main(String[] args) {
 		try {
-			List<Token> results = LexicalAnalyser.analyse("public class foo { public static void main(String[] args){ int i = 0; if (i == 2) { i = i + 1; System.out.println(\"Hi\"); } else { i = i * 2; } } }");
-			//List<Token> results = LexicalAnalyser.analyse(
+			//List<Token> results = LexicalAnalyser.analyse("public class foo { public static void main(String[] args){ int i = 0; if (i == 2) { i = i + 1; System.out.println(\"Hi\"); } else { i = i * 2; } } }");
+			List<Token> results = LexicalAnalyser.analyse("public class Test { public static void main(String[] args){ int i = 3 + 2 * 5; }}");
                         //List<Token> results = LexicalAnalyser.analyse("public class Test { public static void main(String[] args){ for ( ; 5 ;) {; } }}");
                         System.out.println(results);
 			ParseTree tree = SyntacticAnalyser.parse(results);

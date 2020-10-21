@@ -340,6 +340,8 @@ public class SyntacticAnalyser {
             parseTable.put(new Pair(Token.TokenType.NUM, TreeNode.Label.printexpr), r63);
             parseTable.put(new Pair(Token.TokenType.DQUOTE, TreeNode.Label.printexpr), r64);
             
+            Token.TokenType[] specialTokenTypes = {Token.TokenType.ID, Token.TokenType.NUM, Token.TokenType.CHARLIT, Token.TokenType.TYPE, Token.TokenType.STRINGLIT};
+            
             //stack.add(new DollarSign());
             TreeNode baseNode = new TreeNode(TreeNode.Label.prog, null);
             pTree.setRoot(baseNode);
@@ -355,7 +357,7 @@ public class SyntacticAnalyser {
 //            }
 
             TreeNode.Label curLabel;
-            for (int i=0; i < tokens.size() - 1; i++){
+            for (int i=0; i < tokens.size(); i++){
                 //System.out.println("Stack class: " + getTop(stack).getClass() + " Token class" + tokens.get(i).getClass());
                 Token.TokenType tok = tokens.get(i).getType();
                 Symbol stackTop = (Symbol) stack.get(stack.size() - 1).fst();
@@ -366,12 +368,38 @@ public class SyntacticAnalyser {
                     break;
                 }
                 
-                if (!stackTop.isVariable()){ // if top of stack is a terminal (or $)
+                if (!stackTop.isVariable()){ // if top of stack is a terminal
                     //System.out.println("Stack top is a terminal. Comparing stackTop: "+stackTop+" ("+stackTop.getClass()+"), token read: "+tok+" ("+tok.getClass()+")");
                     if (stackTop == tok){ // if top of stack is the same terminal as the token being read
                         // Add top of stack symbol to parse tree
                         // dont because the terminals are added by the other loop. 
-                        //TreeNode newNode = new TreeNode(TreeNode.Label.terminal, new Token((Token.TokenType) stackTop), (TreeNode) stack.get(stack.size()-1).snd());
+                        
+                        // If this token holds additional value data correct this node with this data. 
+                        for (Token.TokenType type : specialTokenTypes){
+                            if (tok.equals(type)){ // Our token is a value holding type. 
+                                System.out.println("Matching a token with a special value containing type");
+                                // Find the node corresponding to this token. 
+                                TreeNode ourNode = null;
+                                TreeNode parent = (TreeNode) stack.get(stack.size() - 1).snd();
+                                List<TreeNode> parentsChildren = ((TreeNode)stack.get(stack.size() - 1).snd()).getChildren();
+                                for (TreeNode k : parentsChildren){
+                                    if (k.getLabel() == TreeNode.Label.terminal){
+                                        if (k.getToken().get().getType().equals(tok)){ // This is the token. Fuck what an absolute nest. I really need to improve my OOP
+                                            ourNode = k;
+                                            System.out.println("Found our treenode: " + ourNode);
+                                            break;
+                                        }
+                                    }
+                                    //if (((Token)k.getToken()).getType() == tok){ ourNode = k; break; }
+                                }
+                                if (!(ourNode == null)){ // We found the node corresponding to this stack sym and token
+                                    ourNode.updateToken(tokens.get(i));
+                                    System.out.println("Updated token in our treenode to: " + tokens.get(i));
+                                    break;
+                                }
+                            }
+                        }
+                        
                         // Pop top of stack from stack and loop again. 
                         System.out.println("Top of stack is a terminal token that matches stack, pop from stack. ");
                         stack.remove(stack.size() - 1);
@@ -426,6 +454,9 @@ public class SyntacticAnalyser {
                             if (prodLine.isVariable()) {
                                 nodeChild = new TreeNode((TreeNode.Label) prodLine, ourNode);
                             } else {
+                                if (prodLine == Token.TokenType.NUM){
+                                    System.out.println("Found a num token to put on tree. Value: ");// + (Token)prodLine);
+                                }
                                 nodeChild = new TreeNode(TreeNode.Label.terminal, getTokenFromType((Token.TokenType) prodLine), ourNode);
                             }
                             ourNode.addChild(nodeChild);
